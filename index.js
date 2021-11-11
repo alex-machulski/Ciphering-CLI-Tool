@@ -33,6 +33,7 @@ const requiredConfigIndex = process.argv.indexOf('-c') === -1 ? process.argv.ind
 const inputPathIndex = process.argv.indexOf('-i') === -1 ? process.argv.indexOf('--input') : process.argv.indexOf('-i');
 const outputPathIndex = process.argv.indexOf('-o') === -1 ? process.argv.indexOf('--output') : process.argv.indexOf('-o');
 
+// validate input/output
 let inputPath = '';
 let outputPath = '';
 if (inputPathIndex !== -1) {
@@ -70,6 +71,7 @@ if (requiredConfigIndex !== -1) {
     }
 }
 
+// creating streams 
 const arrTransformStreams = [];
 for (let i = 0; i < arrConfig.length; i++) {
     if (arrConfig[i][0] === 'A') {
