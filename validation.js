@@ -1,5 +1,5 @@
 const fs = require("fs");
-const {stderr} = process;
+const {ValidateError} = require('./custom-error');
 
 const validateConsoleArguments = (consoleArgs) => {
     const consoleArguments = consoleArgs.slice(2);
@@ -18,11 +18,9 @@ const validateConsoleArguments = (consoleArgs) => {
     }
 
     if (configAmount === 0) {
-        stderr.write('ERROR: Config is required');
-        process.exit(1);
+        throw new ValidateError('ERROR: Config is required', 1);
     } else if (configAmount > 1 || inputPathAmount > 1 || outputPathAmount > 1) {
-        stderr.write('ERROR: There can be no multiple of the same arguments');
-        process.exit(2);
+        throw new ValidateError('ERROR: There can be no multiple of the same arguments', 2);
     }
 }
 
@@ -33,8 +31,7 @@ const validateInputPath = (consoleArguments) => {
     let inputPath = '';
     if (inputPathIndex !== -1) {
         if (!fs.existsSync(consoleArguments[inputPathIndex + 1])) {
-            stderr.write('ERROR: Input file is not exists');
-            process.exit(4);
+            throw new ValidateError('ERROR: Input file is not exists', 3);
         } else {
             inputPath = consoleArguments[inputPathIndex + 1];
         }
@@ -49,8 +46,7 @@ const validateOutputPath = (consoleArguments) => {
     let outputPath = '';
     if (outputPathIndex !== -1) {
         if (!fs.existsSync(consoleArguments[outputPathIndex + 1])) {
-            stderr.write('ERROR: Output file is not exists');
-            process.exit(4);
+            throw new ValidateError('ERROR: Output file is not exists', 3);
         } else {
             outputPath = consoleArguments[outputPathIndex + 1];
         }
@@ -70,14 +66,12 @@ const validateCipherConfig = (consoleArguments) => {
     if (requiredConfigIndex !== -1) {
         requiredConfig = consoleArguments[requiredConfigIndex + 1];
         if (!requiredConfig) {
-            stderr.write('ERROR: Config is required');
-            process.exit(1);
+            throw new ValidateError('ERROR: Config is required', 1);
         }
         arrConfig = requiredConfig.split('-');
         for (let i = 0; i < arrConfig.length; i++) {
             if (!validConfigItems.includes(arrConfig[i])) {
-                stderr.write('ERROR: Config has wrong format');
-                process.exit(3);
+                throw new ValidateError('ERROR: Config has wrong format', 1);
             }
         }
     }

@@ -36,5 +36,7 @@ try {
         }
     )
 } catch (error) {
-    stderr.write(error.message);
+    stderr.write(error.message + '\n');
+    stderr.write(`Program interrupted with code ${error.code}`);
+    process.exit(error.code);
 }
