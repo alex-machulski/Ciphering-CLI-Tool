@@ -18,3 +18,23 @@ describe('validate console arguments', () => {
     })
 })
 
+describe('validate input path', () => {
+    test('should throw error: input file is not exists', () => {
+        const consoleArguments = ["node", "index", "-c", "C1-C1", "-i", "qwertyuiop.txt"];
+        expect(() => validateInputPath(consoleArguments)).toThrowError(new ValidateError('ERROR: Input file is not exists', 3));
+    })
+
+    test('should return empty path if there is no input argument', () => {
+        const consoleArguments = ["node", "index", "-c", "C1-C1"];
+        let path = validateInputPath(consoleArguments);
+        expect(path).toBe('');
+    })
+
+    test('should return right path if there is an input argument', () => {
+        const consoleArguments = ["node", "index", "-c", "C1-C1", "--input", "input.txt"];
+        let path = validateInputPath(consoleArguments);
+        expect(path).toBe('input.txt')
+    })
+})
+
+
