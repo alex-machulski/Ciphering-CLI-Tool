@@ -9,7 +9,7 @@ describe('validate console arguments', () => {
 
     test('should throw error: There can be no multiple of the same arguments', () => {
         const consoleArguments = ["node", "index", "-c", "C1-C1", "-i", "input.txt", "--config", "A-R1-R1"];
-        expect(() => validateConsoleArguments(consoleArguments)).toThrowError(new ValidateError('ERROR: There can be no multiple of the same arguments', 2))
+        expect(() => validateConsoleArguments(consoleArguments)).toThrowError(new ValidateError('ERROR: There can be no multiple of the same arguments', 2));
     })
 
     test('should work without errors', () => {
@@ -33,7 +33,7 @@ describe('validate input path', () => {
     test('should return right path if there is an input argument', () => {
         const consoleArguments = ["node", "index", "-c", "C1-C1", "--input", "input.txt"];
         let path = validateInputPath(consoleArguments);
-        expect(path).toBe('input.txt')
+        expect(path).toBe('input.txt');
     })
 })
 
@@ -52,6 +52,24 @@ describe('validate output path', () => {
     test('should return right path if there is an output argument', () => {
         const consoleArguments = ["node", "index", "-c", "C1-C1", "--output", "output.txt"];
         let path = validateOutputPath(consoleArguments);
-        expect(path).toBe('output.txt')
+        expect(path).toBe('output.txt');
+    })
+})
+
+describe('validate ciphering config', () => {
+    test('should throw error "config is required" if config is empty', () => {
+        const consoleArguments = ["node", "index", "-c", ""];
+        expect(() => validateCipherConfig(consoleArguments)).toThrowError(new ValidateError('ERROR: Config is required', 1));
+    })
+
+    test('should throw error "config has wrong format"', () => {
+        const consoleArguments = ["node", "index", "-c", "R5-C1-A"];
+        expect(() => validateCipherConfig(consoleArguments)).toThrowError(new ValidateError('ERROR: Config has wrong format', 1));
+    })
+
+    test('should return right array of ciphers', () => {
+        const consoleArguments = ["node", "index", "-c", "R1-C1-A"];
+        const ciphers = validateCipherConfig(consoleArguments);
+        expect(ciphers).toEqual(['R1', 'C1', 'A']);
     })
 })
