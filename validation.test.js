@@ -37,4 +37,21 @@ describe('validate input path', () => {
     })
 })
 
+describe('validate output path', () => {
+    test('should throw error: Output file is not exists', () => {
+        const consoleArguments = ["node", "index", "-c", "C1", "--output", "qwertyuiop.txt"];
+        expect(() => validateOutputPath(consoleArguments)).toThrowError(new ValidateError('ERROR: Output file is not exists', 3));
+    })
 
+    test('should return empty path if there is no output argument', () => {
+        const consoleArguments = ["node", "index", "-c", "C1"];
+        let path = validateOutputPath(consoleArguments);
+        expect(path).toBe('');
+    })
+
+    test('should return right path if there is an output argument', () => {
+        const consoleArguments = ["node", "index", "-c", "C1-C1", "--output", "output.txt"];
+        let path = validateOutputPath(consoleArguments);
+        expect(path).toBe('output.txt')
+    })
+})
