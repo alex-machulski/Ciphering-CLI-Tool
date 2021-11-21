@@ -22,6 +22,8 @@ const validateConsoleArguments = (consoleArgs) => {
     } else if (configAmount > 1 || inputPathAmount > 1 || outputPathAmount > 1) {
         throw new ValidateError('ERROR: There can be no multiple of the same arguments', 2);
     }
+
+    return 0;
 }
 
 const validateInputPath = (consoleArguments) => {
