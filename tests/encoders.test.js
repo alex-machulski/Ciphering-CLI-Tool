@@ -1,4 +1,4 @@
-const {encodeDecodeCaesar, encodeDecodeROT8, encodeDecodeAtbash} = require('./encoders');
+const {encodeDecodeCaesar, encodeDecodeROT8, encodeDecodeAtbash} = require('../encoders');
 
 describe('caesar cipher', () => {
     test('should not encode numbers', () => {

@@ -1,5 +1,5 @@
-const {validateConsoleArguments, validateInputPath, validateOutputPath, validateCipherConfig} = require('./validation');
-const {ValidateError} = require("./custom-error");
+const {validateConsoleArguments, validateInputPath, validateOutputPath, validateCipherConfig} = require('../validation');
+const {ValidateError} = require("../custom-error");
 
 describe('validate console arguments', () => {
     test('should throw error: config is required', () => {
